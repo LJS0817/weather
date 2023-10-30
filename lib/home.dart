@@ -12,9 +12,16 @@ final Color textColor = Color(0xFFA9BEC5);
 class Home extends StatefulWidget {
   Home({super.key});
 
+  //화면 업데이트를 위한 타이머
   late Timer timer;
+
+  //현재 시간
   DateTime date = DateTime.now();
-  static const int limitCount = 600;
+
+  //타이머가 10분이 되면 날씨를 한번 업데이트한다.
+  static const int limitCount = 3600;
+
+  //처음 업데이트를 위한 초기화
   int count = limitCount;
 
   @override
@@ -24,6 +31,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   void initState() {
+    //1초마다 카운트 한다.
     widget.timer =  Timer.periodic(
         const Duration(seconds: 1),
         (Timer t) {
@@ -39,6 +47,7 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
+  //시간 아래 나오는 박스
   Widget TextIconBox(String title, String data) {
     return Container(
       width: 110,
@@ -54,6 +63,7 @@ class _HomeState extends State<Home> {
             title,
             style: TextStyle(
               fontSize: 13,
+              fontWeight: FontWeight.bold,
               color: background,
             ),
           ),
@@ -82,6 +92,7 @@ class _HomeState extends State<Home> {
     );
   }
 
+  //요일을 넘겨준다.
   String getWeekday(int i) {
     switch(i) {
       case 1: return "월요일";
@@ -111,7 +122,8 @@ class _HomeState extends State<Home> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(widget.date.hour > 21 && widget.date.hour < 7 ? 'assets/icon/night.png' : 'assets/icon/sun.png', width: 200, height: 200, color: textColor,),
+                          //20시부터 6시까지는 달 그림이 나온다.
+                          Image.asset(widget.date.hour > 19 || widget.date.hour < 7 ? 'assets/icon/night.png' : 'assets/icon/sun.png', width: 200, height: 200, color: textColor,),
                           const Padding(padding: EdgeInsets.only(bottom: 40)),
                           Container(
                             width: 100,
@@ -140,6 +152,7 @@ class _HomeState extends State<Home> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
+                            //날짜와 요일, 강수 형태를 보여준다.
                             "${widget.date.year} - ${widget.date.month} - ${widget.date.day}\n[ ${getWeekday(widget.date.weekday)} ]  ${weather.rainType}",
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -149,6 +162,7 @@ class _HomeState extends State<Home> {
                           ),
                           const Padding(padding: EdgeInsets.only(bottom: 10)),
                           Text(
+                            //10시(분, 초) 이전에는 숫자 앞에 0을 붙여 01, 02, 03, ... 처럼 보이게 한다.
                             "${widget.date.hour < 10 ? "0${widget.date.hour}" : widget.date.hour} : ${widget.date.minute < 10 ? "0${widget.date.minute}" : widget.date.minute} : ${widget.date.second < 10 ? "0${widget.date.second}" : widget.date.second}",
                             style: TextStyle(
                               fontSize: 75,
@@ -181,7 +195,7 @@ class _HomeState extends State<Home> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    // 앱이 꺼지기 전에 타이머를 꺼준다.
     widget.timer.cancel();
     super.dispose();
   }

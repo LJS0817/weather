@@ -5,6 +5,8 @@ import 'package:weather/home.dart';
 
 void main() {
   runApp(const MyApp());
+
+  //휴대폰 전체화면
   SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.manual,
     overlays: [],

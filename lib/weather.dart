@@ -14,7 +14,7 @@ class Weather {
   final String type = "getUltraSrtFcst";
 
   //인증키를 넣는 곳
-  final String _key = "인증키";
+  final String _key = "N%2F8%2F30yWjnvQrVRpUkdUe22AGpy90RcxMI%2BuQq6bbk3Ci96hcqqLS4JrzDVMAnNfP3xzn1l3olDYQNsB5Dm1bg%3D%3D";
 
   //초기화 [의미 없음]
   String date = "20231030";

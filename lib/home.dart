@@ -19,7 +19,7 @@ class Home extends StatefulWidget {
   DateTime date = DateTime.now();
 
   //타이머가 10분이 되면 날씨를 한번 업데이트한다.
-  static const int limitCount = 3600;
+  static const int limitCount = 600;
 
   //처음 업데이트를 위한 초기화
   int count = limitCount;

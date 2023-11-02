@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:async';
+import 'dart:ui';
 import 'package:http/http.dart' as http;
+import 'package:weather/home.dart';
 import 'package:xml2json/xml2json.dart';
 
 class Weather {
@@ -27,9 +29,9 @@ class Weather {
   ///TMP
   ///```
   ///기온
-  String temp = "";
+  String temp = "0";
 
-  String get Temp => "${temp} °C";
+  String get Temp => "$temp°";
 
   ///SKY
   ///```
@@ -40,7 +42,7 @@ class Weather {
   ///```
   ///습도 %
   String moist = "";
-  String get Moist => "${moist} %";
+  String get Moist => "$moist %";
 
   ///RN1
   ///```
@@ -52,7 +54,9 @@ class Weather {
   ///강수 형태
   String rainType = "";
 
-  String get Rain => "${rain} mm";
+  String get Rain => "$rain mm";
+
+  bool isNight = false;
 
   //카테고리에 따라서 바꾸면 된다.
   void setDataWithType(String type, String data) {
@@ -96,6 +100,20 @@ class Weather {
     }
   }
 
+
+  //하늘 상태
+  int getSkytoInt() {
+    if(sky == "맑음") {
+      return 1;
+    } else if(sky == "구름 많음") {
+      return 5;
+    }
+    else {
+      return 10;
+    }
+  }
+
+
   //강수 형태
   String getRain(String str) {
     switch(str) {
@@ -123,9 +141,10 @@ class Weather {
     //i += 6은 데이터의 형태에 따라서 바꿔야 한다.
     for(int i = 0; i < d.length; i += 6) {
       setDataWithType(d[i]["category"], d[i]["fcstValue"]);
-      log(d[i].toString());
+      // log(d[i].toString());
     }
     // log(toString());
+    calculateCloud();
   }
 
   //type에 따라서 날짜 계산하는 게 다르기 때문에

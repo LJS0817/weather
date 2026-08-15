@@ -4,11 +4,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 import 'package:weather/portrait.dart';
 import 'package:weather/weather.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 final Weather weather = Weather();
 
@@ -116,7 +115,7 @@ class _HomeState extends State<Home> {
   void initState() {
     // calculateCloud();
 
-    Wakelock.enable();
+    WakelockPlus.enable();
 
     //1초마다 카운트 한다.
     widget.timer =  Timer.periodic(
@@ -232,7 +231,7 @@ class _HomeState extends State<Home> {
     // 앱이 꺼지기 전에 타이머를 꺼준다.
     widget.timer.cancel();
 
-    Wakelock.disable();
+    WakelockPlus.disable();
     super.dispose();
   }
 }

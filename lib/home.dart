@@ -141,7 +141,7 @@ class _HomeState extends State<Home> {
               //밤인지 계산하고 카운트 초기화를 여기서 해준다.
               future: weather.get(widget.count, Home.limitCount).then((value) => {
                 widget.count = widget.count >= Home.limitCount ? 0 : widget.count,
-                weather.isNight = (widget.date.hour > 20 || widget.date.hour < 6) && !weather.isNight}
+                weather.isNight = (widget.date.hour > 20 || widget.date.hour < 6)}
               ),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 return Stack(
